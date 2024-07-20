@@ -26,11 +26,6 @@ module.exports = [
     },
   },
   {
-    // CSS Loader
-    test: /\.css$/,
-    use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
-  },
-  {
     // SCSS (SASS) Loader
     test: /\.s[ac]ss$/i,
     use: [
@@ -48,4 +43,25 @@ module.exports = [
       filename: 'assets/[hash][ext][query]',
     },
   },
+  {
+    test: /\.css$/,
+    use: [
+      'style-loader',
+      'css-loader',
+      'sass-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          postcssOptions: {
+            plugins: [
+              require('tailwindcss'),
+              require('autoprefixer'),
+            ],
+          },
+        },
+      },
+    ],
+    exclude: /\.module\.s?(c|a)ss$/,
+  },
+
 ];
